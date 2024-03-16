@@ -1,4 +1,7 @@
+import { useParagraph } from "@/hooks/useParagraph.hook";
+
 export function ParagraphGenerator() {
+  const a = useParagraph();
   return (
     <>
       <button className="btn btn-primary ">
@@ -7,7 +10,6 @@ export function ParagraphGenerator() {
       </button>
       <div className="artboard-demo artboard-horizontal p-5 w-full min-h-48">
         <span className="loading loading-dots loading-lg text-primary "></span>
-
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
