@@ -1,3 +1,4 @@
+"use client";
 import { ParagraphGenerator } from "../../components/ParagraphGeneratorBox";
 import { VocabularyAddBox } from "../../components/VocabularyAddBox";
 
