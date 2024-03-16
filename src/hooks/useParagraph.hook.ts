@@ -13,7 +13,7 @@ export type WordDefinition = {
   }[];
 };
 
-type Vocabulary = {
+export type Vocabulary = {
   id: string;
   userId: string;
   word: string;
@@ -24,7 +24,7 @@ type Vocabulary = {
   createdAt: Date;
   lastLearnedAt: Date | null;
 };
-type UseParagraphResult = {
+export type UseParagraphResult = {
   isFetching: boolean;
   isError: boolean;
   data: { paragraph: string; vocabularyList: Vocabulary[] } | undefined;
