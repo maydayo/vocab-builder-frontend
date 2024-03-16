@@ -47,7 +47,22 @@ async function fetchParagraph(): Promise<FetchParagraphResponse> {
         userId: "",
         word: "horizon",
         folderId: "",
-        wordDefinition: { meanings: [] },
+        wordDefinition: {
+          meanings: [
+            {
+              partOfSpeech: "noun",
+              definitions: [
+                {
+                  definition:
+                    "the line at which the earth's surface and the sky appear to meet.",
+                  synonyms: [],
+                  antonyms: [],
+                  example: "the sun rose above the horizon",
+                },
+              ],
+            },
+          ],
+        },
         learningTimes: 0,
         status: "remembered",
         createdAt: new Date(),

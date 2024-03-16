@@ -16,10 +16,10 @@ export function ParagraphGenerator() {
           <HighlightedParagraph
             paragraph={data.paragraph}
             vocabularyList={data.vocabularyList}
-            onWordClick={() => {}}
+            onWordHover={() => {}}
           />
         ) : null}
-        {isError ? <p className="text-red-800">{errorMessage}</p> : null}
+        {isError ? <p className="text-error">{errorMessage}</p> : null}
       </div>
     </>
   );
@@ -28,32 +28,59 @@ export function ParagraphGenerator() {
 type HighlightedParagraphProps = {
   paragraph: string;
   vocabularyList: Vocabulary[];
-  onWordClick: (word: string) => void;
+  onWordHover: (word: string) => void;
 };
 const HighlightedParagraph = (props: HighlightedParagraphProps) => {
-  const { paragraph, vocabularyList, onWordClick } = props;
-  console.log(vocabularyList, splitIntoWords(paragraph));
+  const { paragraph, vocabularyList, onWordHover: onWordClick } = props;
   function splitIntoWords(text: string): string[] {
     return text.split(/\b/);
   }
 
-  function isWordInVocabulary(word: string): boolean {
-    return vocabularyList.some(
+  const getVocabularyFromWord = (word: string) => {
+    return vocabularyList.find(
       (vocabulary) => vocabulary.word.toLowerCase() === word.toLowerCase()
     );
-  }
+  };
 
   const renderHighlightedWords = (words: string[]) => {
     return words.map((word, index) => {
-      if (isWordInVocabulary(word)) {
+      const vocabulary: Vocabulary | undefined = getVocabularyFromWord(word);
+      if (vocabulary) {
         return (
-          <code
-            key={index}
-            className="bg-secondary cursor-pointer"
-            onClick={() => onWordClick(word)}
-          >
-            {word}
-          </code>
+          <>
+            <div className="dropdown dropdown-hover" key={index}>
+              <div tabIndex={0}>
+                <code
+                  className="bg-secondary cursor-pointer"
+                  onClick={() => onWordClick(word)}
+                >
+                  {word}
+                </code>
+              </div>
+              <ul
+                tabIndex={0}
+                className="text-sm dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-64"
+              >
+                {vocabulary.wordDefinition.meanings.map((meaning, index) => {
+                  return (
+                    <div key={index}>
+                      <p className="italic">{meaning.partOfSpeech}</p>
+                      {meaning.definitions.map((definition, index) => (
+                        <div className="leading-tight" key={index}>
+                          <p className="font-medium leading-tight">
+                            {definition.definition}
+                          </p>
+                          <p className="text-stone-600" key={index}>
+                            {`"${definition.example}"`}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          </>
         );
       } else {
         return <span key={index}>{word}</span>;
