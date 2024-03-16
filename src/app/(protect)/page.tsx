@@ -1,5 +1,5 @@
-import { ParagraphGenerator } from "../components/ParagraphGeneratorBox";
-import { VocabularyAddBox } from "../components/VocabularyAddBox";
+import { ParagraphGenerator } from "../../components/ParagraphGeneratorBox";
+import { VocabularyAddBox } from "../../components/VocabularyAddBox";
 
 export default function HomePage() {
   return (
