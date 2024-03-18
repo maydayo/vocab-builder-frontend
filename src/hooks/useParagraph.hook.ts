@@ -3,23 +3,29 @@ import {
   fetchParagraph,
 } from "@/services/vocaularyBuilderApi/generateParagraph";
 import { Vocabulary } from "@/types/vocabulary.type";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export type UseParagraphResult = {
-  isFetching: boolean;
+  isPending: boolean;
   isError: boolean;
   data: { paragraph: string; vocabularyList: Vocabulary[] } | undefined;
   errorMessage?: string;
+  generate: () => void;
 };
 
 export function useParagraph(): UseParagraphResult {
-  const { isFetching, isError, data, error } = useQuery<
+  const { isPending, isError, data, error, mutate } = useMutation<
     FetchParagraphResponse,
     AxiosError<string>
   >({
-    queryKey: ["paragraph"],
-    queryFn: fetchParagraph,
+    mutationFn: fetchParagraph,
   });
-  return { isFetching, isError, errorMessage: error?.response?.data, data };
+  return {
+    isPending,
+    isError,
+    errorMessage: error?.response?.data,
+    data,
+    generate: mutate,
+  };
 }

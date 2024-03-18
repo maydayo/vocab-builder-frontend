@@ -1,18 +1,19 @@
-import { Vocabulary, useParagraph } from "@/hooks/useParagraph.hook";
+import { useParagraph } from "@/hooks/useParagraph.hook";
+import { Vocabulary } from "@/types/vocabulary.type";
 
 export function ParagraphGenerator() {
-  const { isFetching, isError, data, errorMessage } = useParagraph();
+  const { isPending, isError, data, errorMessage, generate } = useParagraph();
   return (
     <>
-      <button className="btn btn-primary ">
+      <button className="btn btn-primary" onClick={generate}>
         Generate Paragraph
         {/* <span className="loading loading-dots loading-sm "></span> */}
       </button>
       <div className="artboard-demo artboard-horizontal p-5 w-full min-h-48">
-        {isFetching ? (
+        {isPending ? (
           <span className="loading loading-dots loading-lg text-primary"></span>
         ) : null}
-        {data ? (
+        {!isPending && data ? (
           <HighlightedParagraph
             paragraph={data.paragraph}
             vocabularyList={data.vocabularyList}
