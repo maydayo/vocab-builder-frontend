@@ -6,7 +6,7 @@ type UseLoginResult = {
   isError: boolean;
   isPending: boolean;
   errorMessage?: string;
-  loginAsync: (input: LoginInput) => Promise<void>;
+  loginAsync: (input: LoginInput) => Promise<string>;
 };
 
 type LoginInput = {
@@ -16,7 +16,7 @@ type LoginInput = {
 
 export function useLogin(): UseLoginResult {
   const { isError, isPending, error, mutateAsync } = useMutation<
-    void,
+    string,
     AxiosError<string>,
     LoginInput
   >({

@@ -5,6 +5,11 @@ type LoginInput = {
   password: string;
 };
 
-export async function login(input: LoginInput) {
-  await fetchClient.post<void>("/login", input);
+export type LoginResponse = {
+  token: string;
+};
+
+export async function login(input: LoginInput): Promise<string> {
+  const response = await fetchClient.post<LoginResponse>("/login", input);
+  return response.data.token;
 }

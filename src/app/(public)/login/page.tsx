@@ -1,6 +1,7 @@
 "use client";
 
 import { useLogin } from "@/hooks/login.hook";
+import { clientCookies } from "@/libs/cookies";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -21,7 +22,8 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await loginAsync(data);
+      const token = await loginAsync(data);
+      clientCookies.set("token", token);
       router.push("/");
     } catch (error) {
       console.error(error);
