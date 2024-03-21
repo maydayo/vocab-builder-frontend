@@ -60,7 +60,7 @@ const HighlightedParagraph = (props: HighlightedParagraphProps) => {
               </div>
               <ul
                 tabIndex={0}
-                className="text-sm dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-64"
+                className="text-sm dropdown-content z-[1] p-2 max-h-60 overflow-y-scroll shadow bg-base-100 rounded-box w-64"
               >
                 {vocabulary.wordDefinition.meanings.map((meaning, index) => {
                   return (
@@ -71,9 +71,11 @@ const HighlightedParagraph = (props: HighlightedParagraphProps) => {
                           <p className="font-medium leading-tight">
                             {definition.definition}
                           </p>
-                          <p className="text-stone-600" key={index}>
-                            {`"${definition.example}"`}
-                          </p>
+                          {definition.example ? (
+                            <p className="text-stone-600" key={index}>
+                              {`"${definition.example}"`}
+                            </p>
+                          ) : null}
                         </div>
                       ))}
                     </div>
