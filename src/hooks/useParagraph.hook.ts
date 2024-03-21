@@ -17,14 +17,16 @@ export type UseParagraphResult = {
 export function useParagraph(): UseParagraphResult {
   const { isPending, isError, data, error, mutate } = useMutation<
     FetchParagraphResponse,
-    AxiosError<string>
+    AxiosError<{
+      message: string;
+    }>
   >({
     mutationFn: fetchParagraph,
   });
   return {
     isPending,
     isError,
-    errorMessage: error?.response?.data,
+    errorMessage: error?.response?.data.message,
     data,
     generate: mutate,
   };
