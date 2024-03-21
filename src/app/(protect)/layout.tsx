@@ -25,6 +25,7 @@ function ProtectLayout(
   const { children } = props;
 
   const { isError, isPending } = useMe();
+
   if (isError) {
     redirect("/login");
   }

@@ -8,7 +8,7 @@ type UseMeResult = {
 };
 
 export function useMe(): UseMeResult {
-  const { isError, isPending, isSuccess } = useQuery({
+  const { isError, isPending, isSuccess } = useQuery<void>({
     queryKey: ["me"],
     queryFn: getMe,
   });
