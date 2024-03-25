@@ -1,16 +1,19 @@
 "use client";
-import { clientCookies } from "@/libs/cookies";
-import { useRouter } from "next/navigation";
-import { useVocabularyList } from "./_components/useVocabularyList.hook";
+import { useGetFolder } from "@/hooks/useGetFolder";
+import { useVocabularyList } from "../_components/useVocabularyList.hook";
 
-export default function HomePage() {
-  const { vocabularyList, isPending, isError } = useVocabularyList();
+type VocabularyListPage = { params: { folderId: string } };
+export default function VocabularyListPage(props: VocabularyListPage) {
+  const { folderId } = props.params;
+  const { vocabularyList } = useVocabularyList(folderId);
+  const { folder } = useGetFolder(folderId);
 
   return (
     <>
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1 className="pb-5">Vocabulary List</h1>
+          <h1>{folder?.folderName || ""}</h1>
         </article>
         <div className="overflow-x-auto">
           <table className="table table-sm">

@@ -5,9 +5,11 @@ export type GetVocabularyResponse = {
   vocabularyList: Vocabulary[];
 };
 
-export async function getVocabularyList(): Promise<Vocabulary[]> {
+export async function getVocabularyList(
+  folderId: string
+): Promise<Vocabulary[]> {
   const response = await fetchClient.get<GetVocabularyResponse>(
-    `/vocabularies/`
+    `/vocabularies?folderId=${folderId}`
   );
   return response.data.vocabularyList;
 }

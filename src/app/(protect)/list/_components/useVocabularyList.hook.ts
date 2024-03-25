@@ -9,15 +9,15 @@ type UseVocabularyListResult = {
   isError: boolean;
   errorMessage?: string;
 };
-export function useVocabularyList(): UseVocabularyListResult {
+export function useVocabularyList(folderId: string): UseVocabularyListResult {
   const {
     data: vocabularyList,
     isPending,
     isError,
     error,
   } = useQuery<Vocabulary[], AxiosError<{ message: string }>>({
-    queryKey: [],
-    queryFn: getVocabularyList,
+    queryKey: ["vocabularyList", folderId],
+    queryFn: () => getVocabularyList(folderId),
   });
   return {
     vocabularyList: vocabularyList || [],

@@ -3,6 +3,7 @@
 import { ParagraphGenerator } from "@/components/ParagraphGeneratorBox";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
 import { useGetFolder } from "@/hooks/useGetFolder";
+import Link from "next/link";
 
 type HomePageProps = { params: { folderId: string } };
 export default function HomePage(props: HomePageProps) {
@@ -18,6 +19,9 @@ export default function HomePage(props: HomePageProps) {
         </article>
         <VocabularyAddBox folderId={folderId} />
         <ParagraphGenerator folderId={folderId} />
+        <Link href={`/list/${folderId}`} className="link link-secondary">
+          All vocabulary list
+        </Link>
       </main>
     </>
   );
