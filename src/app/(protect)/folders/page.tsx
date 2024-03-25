@@ -55,6 +55,7 @@ export default function FolderListPage() {
             updateFolderList();
             closeModal();
           }}
+          closeModal={() => closeModal()}
         />
       </main>
     </>
@@ -67,9 +68,10 @@ type Inputs = {
 
 type AddNewFolderModalProps = {
   onAddNewFolderSuccess?: () => void;
+  closeModal: () => void;
 };
 function AddNewFolderModal(props: AddNewFolderModalProps) {
-  const { onAddNewFolderSuccess } = props;
+  const { onAddNewFolderSuccess, closeModal } = props;
   const {
     register,
     handleSubmit,
@@ -90,7 +92,10 @@ function AddNewFolderModal(props: AddNewFolderModalProps) {
   return (
     <dialog id="addNewFolderModal" className="modal">
       <div className="modal-box">
-        <button className="btn btn-xs btn-circle btn-ghost absolute right-2 top-2">
+        <button
+          className="btn btn-xs btn-circle btn-ghost absolute right-2 top-2"
+          onClick={closeModal}
+        >
           ✕
         </button>
         <form
