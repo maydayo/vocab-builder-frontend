@@ -9,8 +9,6 @@ export default function HomePage() {
         <article className="prose">
           <h1 className="pb-5">Vocabulary Builder</h1>
         </article>
-        <VocabularyAddBox />
-        <ParagraphGenerator />
       </main>
     </>
   );

@@ -5,3 +5,8 @@ export async function getFolderList(): Promise<Folder[]> {
   const result = await fetchClient.get<Folder[]>("/folders");
   return result.data;
 }
+
+export async function getFolder(folderId: string): Promise<Folder> {
+  const result = await fetchClient.get<Folder>(`/folders/${folderId}`);
+  return result.data;
+}
