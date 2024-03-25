@@ -1,8 +1,12 @@
 import { useParagraph } from "@/hooks/useParagraph.hook";
 import { Vocabulary } from "@/types/vocabulary.type";
 
-export function ParagraphGenerator() {
-  const { isPending, isError, data, errorMessage, generate } = useParagraph();
+type ParagraphGeneratorProps = { folderId: string };
+export function ParagraphGenerator(props: ParagraphGeneratorProps) {
+  const { folderId } = props;
+  const { isPending, isError, data, errorMessage, generate } = useParagraph({
+    folderId,
+  });
   return (
     <>
       <button className="btn btn-primary" onClick={generate}>

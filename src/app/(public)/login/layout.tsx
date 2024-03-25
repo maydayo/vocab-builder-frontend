@@ -31,7 +31,7 @@ function PublicLayout(
   }
 
   if (isSuccess) {
-    redirect("/");
+    redirect("/folders");
   }
 
   return <>{children}</>;

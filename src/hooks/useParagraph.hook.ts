@@ -14,14 +14,18 @@ export type UseParagraphResult = {
   generate: () => void;
 };
 
-export function useParagraph(): UseParagraphResult {
+export type UseParagraphArgs = { folderId: string };
+
+export function useParagraph({
+  folderId,
+}: UseParagraphArgs): UseParagraphResult {
   const { isPending, isError, data, error, mutate } = useMutation<
     FetchParagraphResponse,
     AxiosError<{
       message: string;
     }>
   >({
-    mutationFn: fetchParagraph,
+    mutationFn: () => fetchParagraph(folderId),
   });
   return {
     isPending,

@@ -6,9 +6,11 @@ export type FetchParagraphResponse = {
   vocabularyList: Vocabulary[];
 };
 
-export async function fetchParagraph(): Promise<FetchParagraphResponse> {
+export async function fetchParagraph(
+  folderId: string
+): Promise<FetchParagraphResponse> {
   const response = await fetchClient.get<FetchParagraphResponse>(
-    "/paragraphs/generate"
+    `/paragraphs/generate?folderId=${folderId}`
   );
   return response.data;
 }

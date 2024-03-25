@@ -15,9 +15,17 @@ export async function getVocabularyList(): Promise<Vocabulary[]> {
 export type AddVocabularyResponse = {
   wordDefinition: WordDefinition;
 };
-export async function addVocabulary(word: string): Promise<WordDefinition> {
+export type AddVocabularyArgs = {
+  folderId: string;
+  word: string;
+};
+
+export async function addVocabulary(
+  args: AddVocabularyArgs
+): Promise<WordDefinition> {
+  const { folderId, word } = args;
   const response = await fetchClient.put<AddVocabularyResponse>(
-    `/vocabularies/${word}`
+    `/vocabularies/${word}?folderId=${folderId}`
   );
   return response.data.wordDefinition;
 }

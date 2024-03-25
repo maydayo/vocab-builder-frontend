@@ -5,7 +5,9 @@ type Inputs = {
   word: string;
 };
 
-export function VocabularyAddBox() {
+type VocabularyAddBoxProps = { folderId: string };
+export function VocabularyAddBox(props: VocabularyAddBoxProps) {
+  const { folderId } = props;
   const { add, wordDefinition, isPending, isError, errorMessage } =
     useAddVocabulary();
   const {
@@ -15,7 +17,7 @@ export function VocabularyAddBox() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    add(data.word);
+    add({ word: data.word, folderId });
   };
 
   return (

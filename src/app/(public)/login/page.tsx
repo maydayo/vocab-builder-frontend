@@ -24,7 +24,7 @@ export default function LoginPage() {
     try {
       const token = await loginAsync(data);
       clientCookies.set("token", token);
-      router.push("/");
+      router.push("/folders");
     } catch (error) {
       console.error(error);
     }
