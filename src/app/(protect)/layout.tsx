@@ -1,7 +1,8 @@
 "use client";
 import { ClientLayout } from "@/components/ClientLayout";
 import { useMe } from "@/hooks/me.hook";
-import { redirect } from "next/navigation";
+import { clientCookies } from "@/libs/cookies";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Layout(
   props: Readonly<{
@@ -25,6 +26,12 @@ function ProtectLayout(
   const { children } = props;
 
   const { isError, isPending } = useMe();
+  const router = useRouter();
+
+  const logout = () => {
+    clientCookies.remove("token");
+    router.push("/login");
+  };
 
   if (isError) {
     redirect("/login");
@@ -38,5 +45,14 @@ function ProtectLayout(
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <header className="px-5 md:px-12 lg:px-24 py-5 flex justify-end">
+        <button className="btn btn-outline btn-primary btn-sm" onClick={logout}>
+          Logout
+        </button>
+      </header>
+      {children}
+    </>
+  );
 }
