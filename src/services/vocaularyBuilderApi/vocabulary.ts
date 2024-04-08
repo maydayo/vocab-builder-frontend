@@ -31,3 +31,14 @@ export async function addVocabulary(
   );
   return response.data.wordDefinition;
 }
+
+export async function updateVocabularyStatus(args: {
+  vocabularyId: string;
+  status: "learning" | "learned";
+}): Promise<void> {
+  const { vocabularyId, status } = args;
+  await fetchClient.post<AddVocabularyResponse>(
+    `/vocabularies/${vocabularyId}/edit-status`,
+    { status }
+  );
+}

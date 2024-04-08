@@ -17,7 +17,7 @@ export type Vocabulary = {
   folderId: string;
   wordDefinition: WordDefinition;
   learningTimes: number;
-  status: "remembered" | "learning";
+  status: "learned" | "learning";
   createdAt: Date;
   lastLearnedAt: Date | null;
 };
