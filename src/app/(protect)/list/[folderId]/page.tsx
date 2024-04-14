@@ -3,6 +3,7 @@ import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "../_components/useVocabularyList.hook";
 import { useUpdateVocabularyStatus } from "../_components/useUpdateVocabularyStatus";
 import { Vocabulary } from "@/types/vocabulary.type";
+import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
 
 type VocabularyListPage = { params: { folderId: string } };
 export default function VocabularyListPage(props: VocabularyListPage) {
@@ -17,8 +18,8 @@ export default function VocabularyListPage(props: VocabularyListPage) {
           <h1 className="pb-5">Vocabulary List</h1>
           <h1>{folder?.folderName || ""}</h1>
         </article>
-        <div className="overflow-x-auto">
-          <table className="table table-sm">
+        <div className="overflow-x-auto w-full">
+          <table className="table table-sm max-w-52 md:max-w-80 xl:max-w-none overflow-auto">
             {/* head */}
             <thead>
               <tr>
@@ -36,9 +37,9 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                     <th>{index}</th>
                     <td>{vocabulary.word}</td>
                     <td>
-                      <div className="max-w-52 md:max-w-80 lg:max-w-none overflow-auto">
-                        {JSON.stringify(vocabulary.wordDefinition.meanings)}
-                      </div>
+                      <WordDefinitionPanel
+                        definition={vocabulary.wordDefinition}
+                      />
                     </td>
                     <td>{vocabulary.learningTimes}</td>
                     <td>

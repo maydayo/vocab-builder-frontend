@@ -1,5 +1,6 @@
 import { useParagraph } from "@/hooks/useParagraph.hook";
 import { Vocabulary } from "@/types/vocabulary.type";
+import { WordDefinitionPanel } from "./WordDefinitionPanel";
 
 type ParagraphGeneratorProps = { folderId: string };
 export function ParagraphGenerator(props: ParagraphGeneratorProps) {
@@ -66,25 +67,10 @@ const HighlightedParagraph = (props: HighlightedParagraphProps) => {
                 tabIndex={0}
                 className="text-sm dropdown-content z-[1] p-2 max-h-60 overflow-y-scroll shadow bg-base-100 rounded-box w-64"
               >
-                {vocabulary.wordDefinition.meanings.map((meaning, index) => {
-                  return (
-                    <div key={index}>
-                      <p className="italic">{meaning.partOfSpeech}</p>
-                      {meaning.definitions.map((definition, index) => (
-                        <div className="leading-tight" key={index}>
-                          <p className="font-medium leading-tight">
-                            {definition.definition}
-                          </p>
-                          {definition.example ? (
-                            <p className="text-stone-600" key={index}>
-                              {`"${definition.example}"`}
-                            </p>
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })}
+                <WordDefinitionPanel
+                  definition={vocabulary.wordDefinition}
+                  key={index}
+                />
               </ul>
             </div>
           </>

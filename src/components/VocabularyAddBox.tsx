@@ -1,5 +1,6 @@
 import { useAddVocabulary } from "@/hooks/useAddVocabulary.hook";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { WordDefinitionPanel } from "./WordDefinitionPanel";
 
 type Inputs = {
   word: string;
@@ -40,23 +41,7 @@ export function VocabularyAddBox(props: VocabularyAddBoxProps) {
       {errors.word && <span className="text-error">Word is required</span>}
       {isError ? <span className="text-error">{errorMessage}</span> : null}
       {!isPending && wordDefinition ? (
-        <div className="artboard-demo artboard-horizontal p-5 w-full">
-          {wordDefinition.meanings.map((meaning, index) => (
-            <div key={index} className="pb-3">
-              <p className="italic">{meaning.partOfSpeech}</p>
-              {meaning.definitions.map((definition, index) => (
-                <div className="leading-tight pb-2" key={index}>
-                  <p className="font-medium leading-tight">
-                    {definition.definition}
-                  </p>
-                  {definition.example ? (
-                    <p className="text-stone-600">Ex: {definition.example}</p>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        <WordDefinitionPanel definition={wordDefinition} />
       ) : null}
     </div>
   );
