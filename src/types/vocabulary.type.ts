@@ -21,4 +21,5 @@ export type Vocabulary = {
   status: "learned" | "learning";
   createdAt: Date;
   lastLearnedAt: Date | null;
+  matchedWordList: string[];
 };

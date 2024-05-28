@@ -9,7 +9,12 @@ import { AxiosError } from "axios";
 export type UseParagraphResult = {
   isPending: boolean;
   isError: boolean;
-  data: { paragraph: string; vocabularyList: Vocabulary[] } | undefined;
+  data:
+    | {
+        paragraph: string;
+        vocabularyList: Vocabulary[];
+      }
+    | undefined;
   errorMessage?: string;
   generate: () => void;
 };

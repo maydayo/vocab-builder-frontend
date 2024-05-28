@@ -43,8 +43,8 @@ const HighlightedParagraph = (props: HighlightedParagraphProps) => {
   }
 
   const getVocabularyFromWord = (word: string) => {
-    return vocabularyList.find(
-      (vocabulary) => vocabulary.word.toLowerCase() === word.toLowerCase()
+    return vocabularyList.find((vocabulary) =>
+      vocabulary.matchedWordList.includes(word)
     );
   };
 
