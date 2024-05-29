@@ -1,12 +1,7 @@
+import { getRandomVocabulary } from "@/services/vocaularyBuilderApi/vocabulary";
 import { Vocabulary } from "@/types/vocabulary.type";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-
-async function getRandomVocabulary(params: {
-  folderId: string;
-}): Promise<Vocabulary> {
-  throw new Error("not Implemented");
-}
 
 type UseVocabularyReturnType = {
   isPending: boolean;
@@ -34,6 +29,9 @@ export function useVocabulary({
     isError,
     errorMessage: error?.response?.data.message,
     vocabulary: data,
-    random: refetch,
+    random: () => {
+      console.log("refetch");
+      refetch();
+    },
   };
 }

@@ -14,7 +14,14 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
     <>
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <>RandomWord</>
-        <button onClick={random}>Random</button>
+        <button
+          onClick={() => {
+            console.log("click");
+            random();
+          }}
+        >
+          Random
+        </button>
         <div>{vocabulary?.word}</div>
         {vocabulary ? <SentenceChecker word={vocabulary.word} /> : null}
       </main>
@@ -38,14 +45,14 @@ function SentenceChecker(props: SentenceCheckerProps) {
   };
 
   return (
-    <div className="flex-col">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex-col w-full">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <label className="form-control">
           <div className="label">
             <span className="label-text">Create your own sentence!</span>
           </div>
           <textarea
-            className="textarea textarea-bordered h-24"
+            className="textarea textarea-bordered h-24 w-full"
             placeholder="Think about that"
             {...register("text", { required: true })}
           ></textarea>
@@ -60,7 +67,7 @@ function SentenceChecker(props: SentenceCheckerProps) {
           {isPending ? (
             <span className="loading loading-dots loading-sm "></span>
           ) : (
-            "Add"
+            "Check the result"
           )}
         </button>
       </form>

@@ -1,17 +1,27 @@
 import { fetchClient } from "@/libs/fetchClient";
 import { Vocabulary, WordDefinition } from "@/types/vocabulary.type";
 
-export type GetVocabularyResponse = {
+export type GetVocabularyListResponse = {
   vocabularyList: Vocabulary[];
 };
 
 export async function getVocabularyList(
   folderId: string
 ): Promise<Vocabulary[]> {
-  const response = await fetchClient.get<GetVocabularyResponse>(
+  const response = await fetchClient.get<GetVocabularyListResponse>(
     `/vocabularies?folderId=${folderId}`
   );
   return response.data.vocabularyList;
+}
+
+type GetRandomVocabularyResponse = Vocabulary;
+export async function getRandomVocabulary(params: {
+  folderId: string;
+}): Promise<Vocabulary> {
+  const response = await fetchClient.get<GetRandomVocabularyResponse>(
+    `/vocabularies/random?folderId=${params.folderId}`
+  );
+  return response.data;
 }
 
 export type AddVocabularyResponse = {
