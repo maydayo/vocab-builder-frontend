@@ -17,11 +17,22 @@ export default function HomePage(props: HomePageProps) {
         <article className="prose">
           <h1 className="pb-5">{folder?.folderName}</h1>
         </article>
-        <VocabularyAddBox folderId={folderId} />
-        <ParagraphGenerator folderId={folderId} />
-        <Link href={`/list/${folderId}`} className="link link-secondary">
-          All vocabulary list
-        </Link>
+        <>Progress</>
+        <div className="flex-col w-full flex justify-center items-center gap-5">
+          <div className="card w-96 bg-base-100 shadow-md p-5">
+            <Link href={`${folderId}/list`}>View Vocabulary List</Link>
+          </div>
+          <div className="card w-96 bg-base-100 shadow-md p-5">
+            <Link href={`${folderId}/paragraphs`}>
+              Learn Vocabulary From Context
+            </Link>
+          </div>
+          <div className="card w-96 bg-base-100 shadow-md p-5">
+            <Link href={`${folderId}/sentence-builder`}>
+              Build Your Sentence From Vocabulary
+            </Link>
+          </div>
+        </div>
       </main>
     </>
   );

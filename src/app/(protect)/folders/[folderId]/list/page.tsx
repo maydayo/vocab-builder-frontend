@@ -1,9 +1,10 @@
 "use client";
 import { useGetFolder } from "@/hooks/useGetFolder";
-import { useVocabularyList } from "../_components/useVocabularyList.hook";
-import { useUpdateVocabularyStatus } from "../_components/useUpdateVocabularyStatus";
+import { useVocabularyList } from "./_components/useVocabularyList.hook";
+import { useUpdateVocabularyStatus } from "./_components/useUpdateVocabularyStatus";
 import { Vocabulary } from "@/types/vocabulary.type";
 import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
+import { VocabularyAddBox } from "@/components/VocabularyAddBox";
 
 type VocabularyListPage = { params: { folderId: string } };
 export default function VocabularyListPage(props: VocabularyListPage) {
@@ -18,6 +19,7 @@ export default function VocabularyListPage(props: VocabularyListPage) {
           <h1 className="pb-5">Vocabulary List</h1>
           <h1>{folder?.folderName || ""}</h1>
         </article>
+        <VocabularyAddBox folderId={folderId} />
         <div className="overflow-x-auto w-full">
           <table className="table table-sm max-w-52 md:max-w-80 xl:max-w-none overflow-auto">
             {/* head */}
