@@ -18,3 +18,17 @@ export async function addFolder({
 }): Promise<void> {
   await fetchClient.post<Folder>(`/folders`, { folderName });
 }
+
+type GetFolderProgressRespose = {
+  allVocabulary: number;
+  learnedVocabulary: number;
+  learnedVocabularyPercent: number;
+};
+export async function getFolderProgress(
+  folderId: string
+): Promise<GetFolderProgressRespose> {
+  const result = await fetchClient.get<GetFolderProgressRespose>(
+    `/folders/${folderId}/progress`
+  );
+  return result.data;
+}
