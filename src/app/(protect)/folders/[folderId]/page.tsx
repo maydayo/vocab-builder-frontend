@@ -37,7 +37,7 @@ export default function HomePage(props: HomePageProps) {
               {progress.learnedVocabularyPercent}%
             </div>
             <p className="mb-3 font-semibold">
-              You've learned {progress.learnedVocabulary} words from
+              You&apos;ve learned {progress.learnedVocabulary} words from
               {progress.allVocabulary} words 🥳
             </p>
           </>

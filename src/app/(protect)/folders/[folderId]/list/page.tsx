@@ -1,7 +1,7 @@
 "use client";
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "./_components/useVocabularyList.hook";
-import { useUpdateVocabularyStatus } from "./_components/useUpdateVocabularyStatus";
+import { useUpdateVocabularyReadingStatus } from "./_components/useUpdateVocabularyStatus";
 import { Vocabulary } from "@/types/vocabulary.type";
 import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
@@ -29,7 +29,7 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                 <th>Word</th>
                 <th>Definition</th>
                 <th>Learning Times</th>
-                <th>Status</th>
+                <th>Reading Status</th>
               </tr>
             </thead>
             <tbody>
@@ -67,12 +67,13 @@ type StatusButtonProps = {
 };
 function StatusButton(props: StatusButtonProps) {
   const { vocabulary, onUpdateStatusSuccess } = props;
-  const { updateStatusAsync, isPending: isUpdateStatusPending } =
-    useUpdateVocabularyStatus();
+  const { updateReadingStatusAsync, isPending: isUpdateStatusPending } =
+    useUpdateVocabularyReadingStatus();
 
   async function onClickToggleStatus(vocabulary: Vocabulary) {
-    const status = vocabulary.status === "learning" ? "learned" : "learning";
-    updateStatusAsync({ vocabularyId: vocabulary.id, status })
+    const readingStatus =
+      vocabulary.readingStatus === "learning" ? "learned" : "learning";
+    updateReadingStatusAsync({ vocabularyId: vocabulary.id, readingStatus })
       .then(() => {
         onUpdateStatusSuccess();
       })
@@ -89,7 +90,7 @@ function StatusButton(props: StatusButtonProps) {
       {isUpdateStatusPending ? (
         <span className="loading-spinner" />
       ) : (
-        <>{vocabulary.status}</>
+        <>{vocabulary.readingStatus}</>
       )}
     </button>
   );

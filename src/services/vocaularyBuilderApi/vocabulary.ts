@@ -42,13 +42,13 @@ export async function addVocabulary(
   return response.data.wordDefinition;
 }
 
-export async function updateVocabularyStatus(args: {
+export async function updateVocabularyReadingStatus(args: {
   vocabularyId: string;
-  status: "learning" | "learned";
+  readingStatus: "learning" | "learned";
 }): Promise<void> {
-  const { vocabularyId, status } = args;
+  const { vocabularyId, readingStatus } = args;
   await fetchClient.post<AddVocabularyResponse>(
-    `/vocabularies/${vocabularyId}/edit-status`,
-    { status }
+    `/vocabularies/${vocabularyId}/edit-reading-status`,
+    { readingStatus }
   );
 }
