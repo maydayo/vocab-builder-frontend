@@ -1,5 +1,9 @@
 import { fetchClient } from "@/libs/fetchClient";
-import { Vocabulary, WordDefinition } from "@/types/vocabulary.type";
+import {
+  LearningStatus,
+  Vocabulary,
+  WordDefinition,
+} from "@/types/vocabulary.type";
 
 export type GetVocabularyListResponse = {
   vocabularyList: Vocabulary[];
@@ -44,7 +48,7 @@ export async function addVocabulary(
 
 export async function updateReadingStatus(args: {
   vocabularyId: string;
-  readingStatus: "learning" | "learned";
+  readingStatus: LearningStatus;
 }): Promise<void> {
   const { vocabularyId, readingStatus } = args;
   await fetchClient.post<AddVocabularyResponse>(
@@ -55,7 +59,7 @@ export async function updateReadingStatus(args: {
 
 export async function updateUsageStatus(args: {
   vocabularyId: string;
-  usageStatus: "learning" | "learned";
+  usageStatus: LearningStatus;
 }): Promise<void> {
   const { vocabularyId, usageStatus } = args;
   await fetchClient.post<AddVocabularyResponse>(

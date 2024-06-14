@@ -11,6 +11,7 @@ export type WordDefinition = {
   meanings: Meaning[];
 };
 
+export type LearningStatus = "learned" | "learning" | "idle";
 export type Vocabulary = {
   id: string;
   userId: string;
@@ -18,8 +19,8 @@ export type Vocabulary = {
   folderId: string;
   wordDefinition: WordDefinition;
   learningTimes: number;
-  readingStatus: "learned" | "learning";
-  usageStatus: "learned" | "learning";
+  readingStatus: LearningStatus;
+  usageStatus: LearningStatus;
   createdAt: Date;
   lastLearnedAt: Date | null;
   matchedWordList: string[];

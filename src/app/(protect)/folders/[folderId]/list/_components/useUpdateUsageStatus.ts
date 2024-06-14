@@ -1,10 +1,11 @@
 import { updateUsageStatus } from "@/services/vocaularyBuilderApi/vocabulary";
+import { LearningStatus } from "@/types/vocabulary.type";
 import { useMutation } from "@tanstack/react-query";
 
 type UseUpdateUsageStatusResult = {
   updateUsageStatusAsync: (params: {
     vocabularyId: string;
-    usageStatus: "learning" | "learned";
+    usageStatus: LearningStatus;
   }) => Promise<void>;
   isPending: boolean;
 };
