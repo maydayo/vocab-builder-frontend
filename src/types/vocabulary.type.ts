@@ -19,8 +19,7 @@ export type Vocabulary = {
   folderId: string;
   wordDefinition: WordDefinition;
   learningTimes: number;
-  readingStatus: LearningStatus;
-  usageStatus: LearningStatus;
+  learningStatus: LearningStatus;
   createdAt: Date;
   lastLearnedAt: Date | null;
   matchedWordList: string[];

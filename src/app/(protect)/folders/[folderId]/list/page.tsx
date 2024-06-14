@@ -3,8 +3,7 @@ import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "./_components/useVocabularyList.hook";
 import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
-import { ReadingStatusButton } from "./_components/ReadingStatusButton";
-import { UsageStatusButton } from "./_components/UsageStatusButton";
+import { LearningStatusButton } from "./_components/LearningStatusButton";
 
 type VocabularyListPage = { params: { folderId: string } };
 export default function VocabularyListPage(props: VocabularyListPage) {
@@ -29,8 +28,7 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                 <th>Word</th>
                 <th>Definition</th>
                 <th>Learning Times</th>
-                <th>Reading Status</th>
-                <th>Usage Status</th>
+                <th>Learning Status</th>
               </tr>
             </thead>
             <tbody>
@@ -46,13 +44,7 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                     </td>
                     <td>{vocabulary.learningTimes}</td>
                     <td>
-                      <ReadingStatusButton
-                        onUpdateStatusSuccess={invalidateQueries}
-                        vocabulary={vocabulary}
-                      />
-                    </td>
-                    <td>
-                      <UsageStatusButton
+                      <LearningStatusButton
                         onUpdateStatusSuccess={invalidateQueries}
                         vocabulary={vocabulary}
                       />

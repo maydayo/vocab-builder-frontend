@@ -1,20 +1,20 @@
 import { Vocabulary } from "@/types/vocabulary.type";
-import { useUpdateUsageStatus } from "./useUpdateUsageStatus";
+import { useUpdateLearningStatus } from "./useUpdateLearningStatus";
 
-type UsageStatusButtonProps = {
+type LearningStatusButtonProps = {
   vocabulary: Vocabulary;
   onUpdateStatusSuccess: () => void;
 };
 
-export function UsageStatusButton(props: UsageStatusButtonProps) {
+export function LearningStatusButton(props: LearningStatusButtonProps) {
   const { vocabulary, onUpdateStatusSuccess } = props;
-  const { updateUsageStatusAsync, isPending: isUpdateStatusPending } =
-    useUpdateUsageStatus();
+  const { updateLearningStatusAsync, isPending: isUpdateStatusPending } =
+    useUpdateLearningStatus();
 
   async function onClickToggleStatus(vocabulary: Vocabulary) {
-    const usageStatus =
-      vocabulary.usageStatus === "learning" ? "learned" : "learning";
-    updateUsageStatusAsync({ vocabularyId: vocabulary.id, usageStatus })
+    const learningStatus =
+      vocabulary.learningStatus === "learning" ? "learned" : "learning";
+    updateLearningStatusAsync({ vocabularyId: vocabulary.id, learningStatus })
       .then(() => {
         onUpdateStatusSuccess();
       })
@@ -31,7 +31,7 @@ export function UsageStatusButton(props: UsageStatusButtonProps) {
       {isUpdateStatusPending ? (
         <span className="loading-spinner" />
       ) : (
-        <>{vocabulary.usageStatus}</>
+        <>{vocabulary.learningStatus}</>
       )}
     </button>
   );

@@ -46,24 +46,13 @@ export async function addVocabulary(
   return response.data.wordDefinition;
 }
 
-export async function updateReadingStatus(args: {
+export async function updateLearningStatus(args: {
   vocabularyId: string;
-  readingStatus: LearningStatus;
+  learningStatus: LearningStatus;
 }): Promise<void> {
-  const { vocabularyId, readingStatus } = args;
+  const { vocabularyId, learningStatus } = args;
   await fetchClient.post<AddVocabularyResponse>(
-    `/vocabularies/${vocabularyId}/edit-reading-status`,
-    { readingStatus }
-  );
-}
-
-export async function updateUsageStatus(args: {
-  vocabularyId: string;
-  usageStatus: LearningStatus;
-}): Promise<void> {
-  const { vocabularyId, usageStatus } = args;
-  await fetchClient.post<AddVocabularyResponse>(
-    `/vocabularies/${vocabularyId}/edit-usage-status`,
-    { usageStatus }
+    `/vocabularies/${vocabularyId}/edit-learning-status`,
+    { learningStatus }
   );
 }
