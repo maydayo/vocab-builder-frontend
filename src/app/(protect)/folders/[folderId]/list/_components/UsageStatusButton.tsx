@@ -31,7 +31,7 @@ export function UsageStatusButton(props: UsageStatusButtonProps) {
       {isUpdateStatusPending ? (
         <span className="loading-spinner" />
       ) : (
-        <>{vocabulary.readingStatus}</>
+        <>{vocabulary.usageStatus}</>
       )}
     </button>
   );
