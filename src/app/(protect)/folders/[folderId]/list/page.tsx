@@ -1,10 +1,10 @@
 "use client";
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "./_components/useVocabularyList.hook";
-import { useUpdateVocabularyReadingStatus } from "./_components/useUpdateVocabularyStatus";
-import { Vocabulary } from "@/types/vocabulary.type";
 import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
+import { ReadingStatusButton } from "./_components/ReadingStatusButton";
+import { UsageStatusButton } from "./_components/UsageStatusButton";
 
 type VocabularyListPage = { params: { folderId: string } };
 export default function VocabularyListPage(props: VocabularyListPage) {
@@ -30,6 +30,7 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                 <th>Definition</th>
                 <th>Learning Times</th>
                 <th>Reading Status</th>
+                <th>Usage Status</th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +46,13 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                     </td>
                     <td>{vocabulary.learningTimes}</td>
                     <td>
-                      <StatusButton
+                      <ReadingStatusButton
+                        onUpdateStatusSuccess={invalidateQueries}
+                        vocabulary={vocabulary}
+                      />
+                    </td>
+                    <td>
+                      <UsageStatusButton
                         onUpdateStatusSuccess={invalidateQueries}
                         vocabulary={vocabulary}
                       />
@@ -58,40 +65,5 @@ export default function VocabularyListPage(props: VocabularyListPage) {
         </div>
       </main>
     </>
-  );
-}
-
-type StatusButtonProps = {
-  vocabulary: Vocabulary;
-  onUpdateStatusSuccess: () => void;
-};
-function StatusButton(props: StatusButtonProps) {
-  const { vocabulary, onUpdateStatusSuccess } = props;
-  const { updateReadingStatusAsync, isPending: isUpdateStatusPending } =
-    useUpdateVocabularyReadingStatus();
-
-  async function onClickToggleStatus(vocabulary: Vocabulary) {
-    const readingStatus =
-      vocabulary.readingStatus === "learning" ? "learned" : "learning";
-    updateReadingStatusAsync({ vocabularyId: vocabulary.id, readingStatus })
-      .then(() => {
-        onUpdateStatusSuccess();
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-
-  return (
-    <button
-      onClick={() => onClickToggleStatus(vocabulary)}
-      disabled={isUpdateStatusPending}
-    >
-      {isUpdateStatusPending ? (
-        <span className="loading-spinner" />
-      ) : (
-        <>{vocabulary.readingStatus}</>
-      )}
-    </button>
   );
 }

@@ -1,7 +1,7 @@
-import { updateVocabularyReadingStatus } from "@/services/vocaularyBuilderApi/vocabulary";
+import { updateReadingStatus } from "@/services/vocaularyBuilderApi/vocabulary";
 import { useMutation } from "@tanstack/react-query";
 
-type UseUpdateVocabularyReadingStatusResult = {
+type UseUpdateReadingStatusResult = {
   updateReadingStatusAsync: (params: {
     vocabularyId: string;
     readingStatus: "learning" | "learned";
@@ -9,9 +9,9 @@ type UseUpdateVocabularyReadingStatusResult = {
   isPending: boolean;
 };
 
-export function useUpdateVocabularyReadingStatus(): UseUpdateVocabularyReadingStatusResult {
+export function useUpdateReadingStatus(): UseUpdateReadingStatusResult {
   const { mutateAsync: updateReadingStatusAsync, isPending } = useMutation({
-    mutationFn: updateVocabularyReadingStatus,
+    mutationFn: updateReadingStatus,
   });
   return {
     updateReadingStatusAsync,
