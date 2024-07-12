@@ -1,6 +1,6 @@
 "use client";
 import { ClientLayout } from "@/components/ClientLayout";
-import { useMe } from "@/hooks/me.hook";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default function Layout(
@@ -23,16 +23,10 @@ function PublicLayout(
   }>
 ) {
   const { children } = props;
+  const { status } = useSession();
 
-  const { isPending, isSuccess } = useMe();
-
-  if (isPending) {
-    return <>Checking Auth</>;
+  if (status === "authenticated") {
+    return redirect("/folders");
   }
-
-  if (isSuccess) {
-    redirect("/folders");
-  }
-
   return <>{children}</>;
 }

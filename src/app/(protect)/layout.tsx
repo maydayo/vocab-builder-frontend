@@ -1,8 +1,7 @@
 "use client";
 import { ClientLayout } from "@/components/ClientLayout";
-import { useMe } from "@/hooks/me.hook";
-import { clientCookies } from "@/libs/cookies";
-import { redirect, useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Layout(
   props: Readonly<{
@@ -25,34 +24,33 @@ function ProtectLayout(
 ) {
   const { children } = props;
 
-  const { isError, isPending } = useMe();
-  const router = useRouter();
+  const { data: session, status } = useSession();
 
-  const logout = () => {
-    clientCookies.remove("token");
-    router.push("/login");
-  };
-
-  if (isError) {
-    redirect("/login");
-  }
-
-  if (isPending) {
+  if (status === "loading") {
+    return <Loading />;
+  } else if (status === "authenticated") {
     return (
-      <div className="h-full w-full flex items-center justify-center text-txt-700">
-        <div className="loading loading-spinner loading-md"></div>
-      </div>
+      <>
+        <header className="px-5 md:px-12 lg:px-24 py-5 flex justify-end">
+          <button
+            className="btn btn-outline btn-primary btn-sm"
+            onClick={() => signOut()}
+          >
+            Logout
+          </button>
+        </header>
+        {children}
+      </>
     );
+  } else if (status === "unauthenticated") {
+    return redirect("/login");
   }
+}
 
+function Loading() {
   return (
-    <>
-      <header className="px-5 md:px-12 lg:px-24 py-5 flex justify-end">
-        <button className="btn btn-outline btn-primary btn-sm" onClick={logout}>
-          Logout
-        </button>
-      </header>
-      {children}
-    </>
+    <div className="h-full w-full flex items-center justify-center text-txt-700">
+      <div className="loading loading-spinner loading-md"></div>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { configs } from "@/configs";
-import { clientCookies } from "./cookies";
+import { getSession } from "next-auth/react";
 
 const fetchClient = axios.create({
   baseURL: configs.baseUrl,
@@ -10,10 +10,17 @@ const fetchClient = axios.create({
   },
 });
 
-fetchClient.interceptors.request.use((config) => {
-  // Get cookie and set to header
-  config.headers["Authorization"] = `Bearer ${clientCookies.get("token")}`;
-  return config;
-});
+fetchClient.interceptors.request.use(
+  async (config) => {
+    const session = await getSession();
+    if (session) {
+      config.headers.Authorization = `Bearer ${session.backendToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export { fetchClient };
