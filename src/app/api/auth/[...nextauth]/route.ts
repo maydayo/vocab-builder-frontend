@@ -38,6 +38,7 @@ const handler = NextAuth({
       account: Account | null;
     }): Awaitable<JWT> => {
       if (account && user) {
+        console.log(account, user);
         return axios
           .post<{ token: string }>(
             `${process.env.NEXT_PUBLIC_VOCABULARY_API_BASE_URL}/signInOrSignUp`,
@@ -53,6 +54,7 @@ const handler = NextAuth({
             }
           )
           .then((result) => {
+            console.log(result);
             token.backendToken = result.data.token;
             return token;
           })
