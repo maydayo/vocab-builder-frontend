@@ -25,6 +25,7 @@ const handler = NextAuth({
   jwt: {
     secret: secret,
   },
+  secret,
   callbacks: {
     jwt: ({
       token,
