@@ -1,8 +1,8 @@
-import { login } from "@/services/vocaularyBuilderApi/login";
 import NextAuth, { Account, Awaitable, Session, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
+import axios, { AxiosError } from "axios";
 
 const secret = process.env.NEXTAUTH_SECRET;
 const handler = NextAuth({
@@ -36,12 +36,28 @@ const handler = NextAuth({
       account: Account | null;
     }): Awaitable<JWT> => {
       if (account && user) {
-        return login({ username: "maydayodayo", password: "maySoCool55" }).then(
-          (data) => {
-            token.backendToken = data;
+        return axios
+          .post<{ token: string }>(
+            `${process.env.NEXT_PUBLIC_VOCABULARY_API_BASE_URL}/signInOrSignUp`,
+            {
+              displayName: user.name || "user",
+              provider: account.provider,
+              userProviderId: user.id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.API_ADMIN_TOKEN}`,
+              },
+            }
+          )
+          .then((result) => {
+            token.backendToken = result.data.token;
             return token;
-          }
-        );
+          })
+          .catch((error) => {
+            console.error((error as AxiosError).response?.data);
+            throw error;
+          });
       } else {
         return token;
       }

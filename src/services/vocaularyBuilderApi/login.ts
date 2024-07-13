@@ -1,4 +1,4 @@
-import { fetchClient } from "@/libs/fetchClient";
+import axios from "axios";
 
 type LoginInput = {
   username: string;
@@ -10,6 +10,6 @@ export type LoginResponse = {
 };
 
 export async function login(input: LoginInput): Promise<string> {
-  const response = await fetchClient.post<LoginResponse>("/login", input);
+  const response = await axios.post<LoginResponse>("/login", input);
   return response.data.token;
 }
