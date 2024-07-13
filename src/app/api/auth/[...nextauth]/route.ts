@@ -5,7 +5,7 @@ import { JWT } from "next-auth/jwt";
 import axios, { AxiosError } from "axios";
 
 const secret = process.env.NEXTAUTH_SECRET;
-console.log("==========>", secret);
+console.log("==========>", process.env.NEXT_PUBLIC_VOCABULARY_API_BASE_URL);
 const handler = NextAuth({
   providers: [
     GoogleProvider({
