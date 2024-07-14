@@ -45,7 +45,9 @@ const handler = NextAuth({
             {
               displayName: user.name || "user",
               provider: account.provider,
-              userProviderId: user.id,
+              providerAccountId: account.providerAccountId,
+              email: user.email,
+              image: user.image,
             },
             {
               headers: {
