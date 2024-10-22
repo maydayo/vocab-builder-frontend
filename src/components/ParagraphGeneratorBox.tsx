@@ -5,23 +5,35 @@ import { WordDefinitionPanel } from "./WordDefinitionPanel";
 type ParagraphGeneratorProps = { folderId: string };
 export function ParagraphGenerator(props: ParagraphGeneratorProps) {
   const { folderId } = props;
-  const { isPending, isError, data, errorMessage, generate } = useParagraph({
+  const {
+    isLoadingVocabularyList,
+    isError,
+    isWriting,
+    errorMessage,
+    paragraph,
+    vocabularyList,
+    generate,
+  } = useParagraph({
     folderId,
   });
   return (
     <>
-      <button className="btn btn-primary" onClick={generate}>
+      <button
+        className="btn btn-primary"
+        onClick={generate}
+        disabled={isWriting}
+      >
         Generate Paragraph
         {/* <span className="loading loading-dots loading-sm "></span> */}
       </button>
       <div className="artboard-demo artboard-horizontal p-5 w-full min-h-48">
-        {isPending ? (
+        {isLoadingVocabularyList ? (
           <span className="loading loading-dots loading-lg text-primary"></span>
         ) : null}
-        {!isPending && data ? (
+        {!isLoadingVocabularyList && !isError ? (
           <HighlightedParagraph
-            paragraph={data.paragraph}
-            vocabularyList={data.vocabularyList}
+            paragraph={paragraph || ""}
+            vocabularyList={vocabularyList}
             onWordHover={() => {}}
           />
         ) : null}
@@ -43,9 +55,7 @@ const HighlightedParagraph = (props: HighlightedParagraphProps) => {
   }
 
   const getVocabularyFromWord = (word: string) => {
-    return vocabularyList.find((vocabulary) =>
-      vocabulary.matchedWordList.includes(word)
-    );
+    return vocabularyList.find((vocabulary) => word === vocabulary.word);
   };
 
   const renderHighlightedWords = (words: string[]) => {

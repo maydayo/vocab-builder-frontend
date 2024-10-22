@@ -8,14 +8,11 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 export type UseParagraphResult = {
-  isPending: boolean;
+  isLoadingVocabularyList: boolean;
+  isWriting: boolean;
   isError: boolean;
-  data:
-    | {
-        paragraph: string;
-        vocabularyList: Vocabulary[];
-      }
-    | undefined;
+  vocabularyList: Vocabulary[];
+  paragraph: string | undefined;
   errorMessage?: string;
   generate: () => void;
 };
@@ -33,7 +30,7 @@ export function useParagraph({
     queryFn: () => getRandomVocabularyList({ folderId }),
     enabled: false,
   });
-  const { writeText, text } = useWriteParagraphLocal();
+  const { writeText, text, isWriting } = useWriteParagraphLocal();
   const generate = async () => {
     await refetch();
     if (data) {
@@ -41,13 +38,12 @@ export function useParagraph({
     }
   };
   return {
-    isPending,
+    isLoadingVocabularyList: isPending,
+    isWriting,
     isError,
     errorMessage: error?.response?.data.message,
-    data: {
-      paragraph: text,
-      vocabularyList: data?.vocabularyList || [],
-    },
+    paragraph: text,
+    vocabularyList: data?.vocabularyList || [],
     generate,
   };
 }
@@ -74,7 +70,6 @@ function useWriteParagraphLocal() {
       );
       for await (const chunk of stream) {
         setText(chunk);
-        console.log(chunk);
       }
       console.log("stream", stream);
     } catch (e) {
@@ -112,7 +107,6 @@ function useAIWriter() {
         if (window.self.ai?.writer && window.self.ai?.rewriter) {
           const writer = await window.self.ai.writer.create({
             tone: "informal",
-            length: "shorter",
           });
           setWriter(writer);
           console.log(writer);
