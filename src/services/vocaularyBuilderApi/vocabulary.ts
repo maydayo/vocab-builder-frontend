@@ -56,3 +56,29 @@ export async function updateLearningStatus(args: {
     { learningStatus }
   );
 }
+
+export type GetRandomVocabularyListArgs = {
+  folderId: string;
+};
+export type GetRandomVocabularyListResponse = {
+  vocabularyList: Vocabulary[];
+};
+export type GetRandomVocabularyListReturnType = {
+  vocabularyList: Vocabulary[];
+  wordList: string[];
+};
+export async function getRandomVocabularyList(
+  args: GetRandomVocabularyListArgs
+): Promise<GetRandomVocabularyListReturnType> {
+  const { folderId } = args;
+  const response = await fetchClient.get<GetRandomVocabularyListResponse>(
+    `/vocabularies/random-list?folderId=${folderId}`
+  );
+  const wordList = response.data.vocabularyList.map(
+    (vocabulary) => vocabulary.word
+  );
+  return {
+    vocabularyList: response.data.vocabularyList,
+    wordList,
+  };
+}
