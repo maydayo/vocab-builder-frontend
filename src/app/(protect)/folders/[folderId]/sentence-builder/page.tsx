@@ -2,6 +2,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useVocabulary } from "./_components/useVocabulary.hook";
 import { useCheckSentence } from "./_components/useCheckSentence.hook";
+import { useEffect, useState } from "react";
 
 type SentenceBuilderPageProps = { params: { folderId: string } };
 export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
@@ -24,6 +25,7 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
         </button>
         <div>{vocabulary?.word}</div>
         {vocabulary ? <SentenceChecker word={vocabulary.word} /> : null}
+        <SentenceTranslator word={vocabulary?.word || ""} />
       </main>
     </>
   );
@@ -74,4 +76,71 @@ function SentenceChecker(props: SentenceCheckerProps) {
       <div>{result}</div>
     </div>
   );
+}
+
+type SentenceTranslatorProps = { word: string };
+
+function SentenceTranslator(props: SentenceTranslatorProps) {
+  const { word } = props;
+  const { translate } = useTranslate();
+  return (
+    <>
+      <button onClick={() => translate(word)}>translate</button>
+    </>
+  );
+}
+
+function useTranslate() {
+  const [translator, setTranslator] = useState<any | undefined>();
+  useEffect(() => {
+    const initializeAITranslator = async () => {
+      console.log("initializeAITranslator", window.self);
+      try {
+        if (window.self.ai?.translator) {
+          console.log("creating translator");
+          const translator = await window.self.ai.translator.create({
+            sourceLanguage: "en",
+            targetLanguage: "en",
+          });
+          setTranslator(translator);
+          console.log("done creating translator");
+        } else {
+          console.log("This AI Translator demo doesn't work on your browser.");
+          console.log(
+            "Please use Chrome >= 129. And enable the following flags:"
+          );
+        }
+      } catch (e) {
+        console.log(e);
+        console.log(
+          "Failed to create an AITranslator. (Rebooting Chrome may resolve the issue.)"
+        );
+      } finally {
+        console.log("initializeAITranslator done");
+      }
+      return () => {
+        if (translator) {
+          translator.destroy();
+        }
+      };
+    };
+
+    initializeAITranslator();
+  }, []);
+
+  const translate = async (word: string) => {
+    if (!translator) {
+      console.log("no translator");
+      return;
+    }
+    if (translator) {
+      console.log("translating...");
+      const translated = await translator.translate(word);
+      console.log(translated);
+    }
+  };
+  return {
+    translate,
+    translator,
+  };
 }

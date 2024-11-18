@@ -56,6 +56,11 @@ function useWriteParagraphLocal() {
 
   async function writeText(words: string[]) {
     console.log("writeText", (window as any).ai.writer);
+    if (!writer) {
+      console.log("no writer");
+      setError("No writer");
+      return;
+    }
 
     setIsWriting(true);
     try {
@@ -93,6 +98,7 @@ declare global {
         create: (options: any) => Promise<{ destroy: () => void }>;
       };
       rewriter: any;
+      translator: any;
     };
   }
 }
