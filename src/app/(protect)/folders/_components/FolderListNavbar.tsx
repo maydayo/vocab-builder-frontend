@@ -1,14 +1,15 @@
-import { SignOutButton } from "@/components/SignOutButton";
+import {
+  NavbarBreadCrumb,
+  NavbarHomeItem,
+  NavbarLayout,
+} from "@/components/NavBar";
 import React from "react";
 
 export const FolderListNavbar: React.FC = () => {
+  const list = [<NavbarHomeItem key="home" />];
   return (
-    <div className="navbar bg-base-100 px-5 md:px-12 lg:px-24">
-      <div className="flex-1"></div>
-
-      <div className="flex-none">
-        <SignOutButton />
-      </div>
-    </div>
+    <NavbarLayout>
+      <NavbarBreadCrumb list={list} />
+    </NavbarLayout>
   );
 };

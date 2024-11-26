@@ -15,7 +15,10 @@ export default function DirectoryPage(props: DirectoryPageProps) {
 
   return (
     <>
-      <DirectoryNavbar folderName={folder?.folderName || ""} />
+      <DirectoryNavbar
+        folderName={folder?.folderName || ""}
+        folderId={folderId}
+      />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1 className="pb-5">{folder?.folderName}</h1>

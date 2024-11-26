@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { SignOutButton } from "./SignOutButton";
 import { FolderIcon } from "@/app/icons/FolderIcon";
+import Link from "next/link";
 
 export const NavbarLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -32,9 +33,9 @@ export const NavbarListItem = ({
   icon?: ReactNode;
 }) => {
   return (
-    <a className="btn btn-ghost text-xl" href={href}>
+    <Link className="btn btn-ghost text-xl" href={href}>
       {icon} {name}
-    </a>
+    </Link>
   );
 };
 
@@ -52,7 +53,7 @@ export const NavbarDirectoryItem = ({
   return (
     <NavbarListItem
       name={folderName}
-      href={`folders/${folderId}`}
+      href={`/folders/${folderId}`}
       icon={<FolderIcon />}
     />
   );
