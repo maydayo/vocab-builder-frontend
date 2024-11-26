@@ -4,6 +4,7 @@ import { useFetchRandomVocabularyList } from "./_components/useFetchRandomVocabu
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { useWriteParagraphLocal } from "./_components/useParagraph.hook";
 import { HighlightedParagraph } from "./_components/HighlightParagraph";
+import { ParagraphNavBar } from "./_components/ParagraphNavbar";
 
 type ParagraphGeneratorPageProps = { params: { folderId: string } };
 
@@ -38,6 +39,7 @@ export default function ParagraphGeneratorPage(
 
   return (
     <>
+      <ParagraphNavBar />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1 className="pb-5">{folder ? folder.folderName : "Loading..."}</h1>
