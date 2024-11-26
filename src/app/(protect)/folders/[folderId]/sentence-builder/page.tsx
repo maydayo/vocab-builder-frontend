@@ -1,8 +1,8 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useVocabulary } from "./_components/useVocabulary.hook";
-import { useCheckSentence } from "./_components/useCheckSentence.hook";
 import { useEffect, useState } from "react";
+import { useCheckSentenceLocal } from "./_components/useCheckSentenceLocal.hook";
 
 type SentenceBuilderPageProps = { params: { folderId: string } };
 export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
@@ -39,8 +39,10 @@ function SentenceChecker(props: SentenceCheckerProps) {
     formState: { errors },
   } = useForm<{ text: string }>();
   const { word } = props;
+  // const { isPending, isError, result, errorMessage, checkSentence } =
+  //   useCheckSentence();
   const { isPending, isError, result, errorMessage, checkSentence } =
-    useCheckSentence();
+    useCheckSentenceLocal();
 
   const onSubmit: SubmitHandler<{ text: string }> = async (data) => {
     checkSentence({ word, sentence: data.text });
