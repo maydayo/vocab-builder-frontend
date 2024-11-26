@@ -39,7 +39,10 @@ export default function ParagraphGeneratorPage(
 
   return (
     <>
-      <ParagraphNavBar />
+      <ParagraphNavBar
+        folderId={folder?.folderId || ""}
+        folderName={folder?.folderName || ""}
+      />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1 className="pb-5">{folder ? folder.folderName : "Loading..."}</h1>
