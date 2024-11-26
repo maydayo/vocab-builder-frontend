@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useVocabulary } from "./_components/useVocabulary.hook";
 import { useEffect, useState } from "react";
 import { useCheckSentenceLocal } from "./_components/useCheckSentenceLocal.hook";
+import { SentenceBuilderNavbar } from "./_components/SentenceBuilderNavbar";
+import { useGetFolder } from "@/hooks/useGetFolder";
 
 type SentenceBuilderPageProps = { params: { folderId: string } };
 export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
@@ -10,9 +12,14 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
   const { isPending, isError, vocabulary, random } = useVocabulary({
     folderId: params.folderId,
   });
+  const { folder } = useGetFolder(params.folderId);
 
   return (
     <>
+      <SentenceBuilderNavbar
+        folderId={params.folderId}
+        folderName={folder?.folderName || ""}
+      />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <>RandomWord</>
         <button

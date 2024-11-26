@@ -15,6 +15,7 @@ export function useGetFolder(folderId: string): UserGetFolderResult {
   } = useQuery({
     queryKey: ["getFolder", folderId],
     queryFn: () => getFolder(folderId),
+    staleTime: 1000 * 5,
   });
   return { isError, isPending, folder };
 }
