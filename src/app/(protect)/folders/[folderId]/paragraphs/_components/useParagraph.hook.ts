@@ -5,54 +5,14 @@ import {
 import { Vocabulary } from "@/types/vocabulary.type";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
-export type UseParagraphResult = {
-  isLoadingVocabularyList: boolean;
-  isWriting: boolean;
-  isError: boolean;
-  vocabularyList: Vocabulary[];
-  paragraph: string | undefined;
-  errorMessage?: string;
-  generate: () => void;
-};
-
-export type UseParagraphArgs = { folderId: string };
-
-export function useParagraph({
-  folderId,
-}: UseParagraphArgs): UseParagraphResult {
-  const { isPending, isError, data, error, refetch } = useQuery<
-    GetRandomVocabularyListReturnType,
-    AxiosError<{ message: string }>
-  >({
-    queryKey: ["getRandomVocabularyList", folderId],
-    queryFn: () => getRandomVocabularyList({ folderId }),
-    enabled: false,
-  });
-  const { writeText, text, isWriting } = useWriteParagraphLocal();
-  const generate = async () => {
-    await refetch();
-    if (data) {
-      writeText(data.wordList);
-    }
-  };
-  return {
-    isLoadingVocabularyList: isPending,
-    isWriting,
-    isError,
-    errorMessage: error?.response?.data.message,
-    paragraph: text,
-    vocabularyList: data?.vocabularyList || [],
-    generate,
-  };
-}
-
-function useWriteParagraphLocal() {
+export function useWriteParagraphLocal() {
   const [isWriting, setIsWriting] = useState(false);
   const [text, setText] = useState("");
   const [error, setError] = useState<unknown>();
   const { writer } = useAIWriter();
+  const divRef = useRef<HTMLDivElement>(null);
 
   async function writeText(words: string[]) {
     console.log("writeText", (window as any).ai.writer);
@@ -67,6 +27,7 @@ function useWriteParagraphLocal() {
       // console.log("creating writer", (window as any).ai.writer);
       // const writer = await (window as any).ai.writer.create();
       // console.log("get a writer", writer);
+      console.log("words", words);
       const stream = writer.writeStreaming(
         "write a fun story with these words",
         {
@@ -74,6 +35,10 @@ function useWriteParagraphLocal() {
         }
       );
       for await (const chunk of stream) {
+        console.log("chunk", chunk);
+        if (divRef.current) {
+          divRef.current.textContent = chunk;
+        }
         setText(chunk);
       }
       console.log("stream", stream);
@@ -88,6 +53,7 @@ function useWriteParagraphLocal() {
     isWriting,
     error,
     text,
+    divRef,
   };
 }
 

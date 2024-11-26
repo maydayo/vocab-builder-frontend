@@ -1,7 +1,7 @@
 "use client";
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "./_components/useVocabularyList.hook";
-import { WordDefinitionPanel } from "@/components/WordDefinitionPanel";
+import { WordDefinitionPanel } from "@/app/(protect)/folders/[folderId]/paragraphs/_components/WordDefinitionPanel";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
 import { LearningStatusButton } from "./_components/LearningStatusButton";
 

@@ -1,54 +1,12 @@
-import { useParagraph } from "@/hooks/useParagraph.hook";
+import { WordDefinitionPanel } from "@/app/(protect)/folders/[folderId]/paragraphs/_components/WordDefinitionPanel";
 import { Vocabulary } from "@/types/vocabulary.type";
-import { WordDefinitionPanel } from "./WordDefinitionPanel";
-
-type ParagraphGeneratorProps = { folderId: string };
-export function ParagraphGenerator(props: ParagraphGeneratorProps) {
-  const { folderId } = props;
-  const {
-    isLoadingVocabularyList,
-    isError,
-    isWriting,
-    errorMessage,
-    paragraph,
-    vocabularyList,
-    generate,
-  } = useParagraph({
-    folderId,
-  });
-  return (
-    <>
-      <button
-        className="btn btn-primary"
-        onClick={generate}
-        disabled={isWriting}
-      >
-        Generate Paragraph
-        {/* <span className="loading loading-dots loading-sm "></span> */}
-      </button>
-      <div className="artboard-demo artboard-horizontal p-5 w-full min-h-48">
-        {isLoadingVocabularyList ? (
-          <span className="loading loading-dots loading-lg text-primary"></span>
-        ) : null}
-        {!isLoadingVocabularyList && !isError ? (
-          <HighlightedParagraph
-            paragraph={paragraph || ""}
-            vocabularyList={vocabularyList}
-            onWordHover={() => {}}
-          />
-        ) : null}
-        {isError ? <p className="text-error">{errorMessage}</p> : null}
-      </div>
-    </>
-  );
-}
 
 type HighlightedParagraphProps = {
   paragraph: string;
   vocabularyList: Vocabulary[];
   onWordHover: (word: string) => void;
 };
-const HighlightedParagraph = (props: HighlightedParagraphProps) => {
+export const HighlightedParagraph = (props: HighlightedParagraphProps) => {
   const { paragraph, vocabularyList, onWordHover: onWordClick } = props;
   function splitIntoWords(text: string): string[] {
     return text.split(/\b/);

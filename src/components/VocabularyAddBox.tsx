@@ -1,6 +1,6 @@
 import { useAddVocabulary } from "@/hooks/useAddVocabulary.hook";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { WordDefinitionPanel } from "./WordDefinitionPanel";
+import { WordDefinitionPanel } from "../app/(protect)/folders/[folderId]/paragraphs/_components/WordDefinitionPanel";
 
 type Inputs = {
   word: string;
