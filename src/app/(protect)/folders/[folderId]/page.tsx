@@ -4,9 +4,10 @@ import { useGetFolder } from "@/hooks/useGetFolder";
 import Link from "next/link";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { useFolderProgress } from "../_components/useFolderProgress.hook";
+import { DirectoryNavbar } from "./_components/DirectoryNavbar";
 
-type HomePageProps = { params: { folderId: string } };
-export default function HomePage(props: HomePageProps) {
+type DirectoryPageProps = { params: { folderId: string } };
+export default function DirectoryPage(props: DirectoryPageProps) {
   const { folderId } = props.params;
 
   const { folder } = useGetFolder(folderId);
@@ -14,6 +15,7 @@ export default function HomePage(props: HomePageProps) {
 
   return (
     <>
+      <DirectoryNavbar folderName={folder?.folderName || ""} />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1 className="pb-5">{folder?.folderName}</h1>
