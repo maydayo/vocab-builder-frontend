@@ -13,6 +13,7 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
     folderId: params.folderId,
   });
   const { folder } = useGetFolder(params.folderId);
+  console.log(vocabulary);
 
   return (
     <>
@@ -23,29 +24,29 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <>RandomWord</>
         <button
+          className="btn btn-primary"
           onClick={() => {
-            console.log("click");
             random();
           }}
         >
           Random
         </button>
         <div>{vocabulary?.word}</div>
-        {vocabulary ? <SentenceChecker word={vocabulary.word} /> : null}
+        <SentenceChecker word={vocabulary?.word || ""} isShow={!!vocabulary} />
         <SentenceTranslator word={vocabulary?.word || ""} />
       </main>
     </>
   );
 }
 
-type SentenceCheckerProps = { word: string };
+type SentenceCheckerProps = { word: string; isShow: boolean };
 function SentenceChecker(props: SentenceCheckerProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ text: string }>();
-  const { word } = props;
+  const { word, isShow = false } = props;
   // const { isPending, isError, result, errorMessage, checkSentence } =
   //   useCheckSentence();
   const { isPending, isError, result, errorMessage, checkSentence } =
@@ -65,6 +66,7 @@ function SentenceChecker(props: SentenceCheckerProps) {
           <textarea
             className="textarea textarea-bordered h-24 w-full"
             placeholder="Think about that"
+            disabled={!isShow}
             {...register("text", { required: true })}
           ></textarea>
         </label>
@@ -74,7 +76,11 @@ function SentenceChecker(props: SentenceCheckerProps) {
           <span className="text-error">Type something</span>
         ) : null}
 
-        <button className="btn btn-primary join-item" type="submit">
+        <button
+          className="btn btn-primary join-item"
+          type="submit"
+          disabled={!isShow}
+        >
           {isPending ? (
             <span className="loading loading-dots loading-sm "></span>
           ) : (
