@@ -31,14 +31,19 @@ function ProtectLayout(
   } else if (status === "authenticated") {
     return (
       <>
-        <header className="px-5 md:px-12 lg:px-24 py-5 flex justify-end">
-          <button
-            className="btn btn-outline btn-primary btn-sm"
-            onClick={() => signOut()}
-          >
-            Logout
-          </button>
-        </header>
+        <div className="navbar bg-base-100">
+          <div className="flex-1">
+            <a className="btn btn-ghost text-xl">Vocabulary Builder</a>
+          </div>
+          <div className="flex-none">
+            <button
+              className="btn btn-outline btn-primary btn-sm"
+              onClick={() => signOut()}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
         {children}
       </>
     );
