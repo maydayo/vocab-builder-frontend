@@ -29,24 +29,7 @@ function ProtectLayout(
   if (status === "loading") {
     return <Loading />;
   } else if (status === "authenticated") {
-    return (
-      <>
-        <div className="navbar bg-base-100">
-          <div className="flex-1">
-            <a className="btn btn-ghost text-xl">Vocabulary Builder</a>
-          </div>
-          <div className="flex-none">
-            <button
-              className="btn btn-outline btn-primary btn-sm"
-              onClick={() => signOut()}
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-        {children}
-      </>
-    );
+    return <>{children}</>;
   } else if (status === "unauthenticated") {
     return redirect("/login");
   }

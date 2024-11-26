@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useFolderList } from "./_components/useFolderList.hook";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAddNewFolder } from "./_components/useAddNewFolder.hook";
+import { FolderListNavbar } from "./_components/FolderListNavbar";
 
 export default function FolderListPage() {
   const { isPending, isError, folderList, updateFolderList } = useFolderList();
@@ -22,6 +23,7 @@ export default function FolderListPage() {
 
   return (
     <>
+      <FolderListNavbar />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
         <article className="prose">
           <h1>Vocabulary Builder</h1>
