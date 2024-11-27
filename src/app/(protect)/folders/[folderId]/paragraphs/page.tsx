@@ -17,6 +17,7 @@ export default function ParagraphGeneratorPage(
     vocabularyList,
     isLoadingVocabularyList,
     isError: isVocabularyListError,
+    errorMessage: vocabularyListErrorMessage,
   } = useFetchRandomVocabularyList({ folderId: params.folderId });
 
   const {
@@ -27,11 +28,7 @@ export default function ParagraphGeneratorPage(
     writerAiInitErrorMesssage,
   } = useWriteParagraphLocal();
 
-  const {
-    folder,
-    isError: isFolderError,
-    isPending: isFolderPending,
-  } = useGetFolder(params.folderId);
+  const { folder, isPending: isFolderPending } = useGetFolder(params.folderId);
 
   async function generate() {
     try {
@@ -42,6 +39,8 @@ export default function ParagraphGeneratorPage(
       console.error("error when generate message", e);
     }
   }
+
+  const isLoading = isWriting || isLoadingVocabularyList;
 
   return (
     <>
@@ -57,24 +56,33 @@ export default function ParagraphGeneratorPage(
           <button
             className="btn btn-primary"
             onClick={generate}
-            disabled={isWriting || isLoadingVocabularyList}
+            disabled={isLoading}
           >
-            {!isLoadingVocabularyList && !isWriting
-              ? "Generate Paragraph"
-              : null}
-            {isLoadingVocabularyList ? "Loading Vocabulary List" : null}
-            {isWriting ? "Writing" : null}
+            Generate Paragraph
           </button>
           <HighlightedParagraph
             paragraph={text || ""}
             vocabularyList={vocabularyList}
             onWordHover={() => {}}
           />
-          {errorMessage ? <p className="text-red-500">{errorMessage}</p> : null}
-          {writerAiInitErrorMesssage ? (
-            <p className="text-red-500">{errorMessage}</p>
-          ) : null}
-          {isLoadingVocabularyList
+          <LoadingSection
+            isLoadingVocabularyList={isLoadingVocabularyList}
+            isWriting={isWriting}
+          />
+          {isLoading ? null : (
+            <>
+              {errorMessage ? (
+                <p className="text-red-500">{errorMessage}</p>
+              ) : null}
+              {writerAiInitErrorMesssage ? (
+                <p className="text-red-500">{errorMessage}</p>
+              ) : null}
+              {isVocabularyListError ? (
+                <p className="text-red-500">{vocabularyListErrorMessage}</p>
+              ) : null}
+            </>
+          )}
+          {isLoading
             ? "...Loading"
             : vocabularyList.map((vocabulary) => (
                 <div key={vocabulary.id}>
@@ -88,4 +96,19 @@ export default function ParagraphGeneratorPage(
       </main>
     </>
   );
+}
+
+type LoadingSectionProps = {
+  isLoadingVocabularyList: boolean;
+  isWriting: boolean;
+};
+function LoadingSection(props: LoadingSectionProps) {
+  const { isLoadingVocabularyList, isWriting } = props;
+  let loadingText = "";
+  if (isLoadingVocabularyList) {
+    loadingText = "Loading Vocabulary List...";
+  } else if (isWriting) {
+    loadingText = "Writing...";
+  }
+  return <p className="text-sm text-gray-500">{loadingText}</p>;
 }
