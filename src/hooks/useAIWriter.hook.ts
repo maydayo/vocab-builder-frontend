@@ -18,6 +18,7 @@ type UseAIWriterArgs = {
 };
 export function useAIWriter(args: UseAIWriterArgs) {
   const [writer, setWriter] = useState<any | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { tone = "casual", format = "plain-text", length = "medium" } = args;
   useEffect(() => {
     const initializeAIWriter = async () => {
@@ -30,6 +31,11 @@ export function useAIWriter(args: UseAIWriterArgs) {
           });
           setWriter(writer);
         } else {
+          setErrorMessage(`This AIWriter/AIRewriter demo doesn't work on your browser.
+            Please use Chrome >= 129. And enable the following flags:
+            chrome://flags/#writer-api-for-gemini-nano
+            chrome://flags/#rewriter-api-for-gemini-nano
+            chrome://flags/#optimization-guide-on-device-model`);
           console.log(
             "This AIWriter/AIRewriter demo doesn't work on your browser."
           );
@@ -41,10 +47,15 @@ export function useAIWriter(args: UseAIWriterArgs) {
           console.log("  chrome://flags/#optimization-guide-on-device-model");
         }
       } catch (e) {
-        console.log(e);
-        console.log(
-          "Failed to create an AIWriter. (Rebooting Chrome may resolve the issue.)"
-        );
+        console.error(e);
+        let errorMessage = "";
+        if (typeof e === "string") {
+          errorMessage = e;
+        } else if (e instanceof Error) {
+          errorMessage = e.message;
+        }
+        setErrorMessage(`Failed to create an AIWriter. (Rebooting Chrome may resolve the issue.)
+          ${errorMessage}`);
       } finally {
         console.log("initializeAIWriter done");
       }
@@ -57,5 +68,5 @@ export function useAIWriter(args: UseAIWriterArgs) {
 
     initializeAIWriter();
   }, [tone, format, length]);
-  return { writer };
+  return { writer, errorMessage };
 }

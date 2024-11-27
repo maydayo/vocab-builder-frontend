@@ -19,7 +19,13 @@ export default function ParagraphGeneratorPage(
     isError: isVocabularyListError,
   } = useFetchRandomVocabularyList({ folderId: params.folderId });
 
-  const { writeText, text, isWriting } = useWriteParagraphLocal();
+  const {
+    writeText,
+    text,
+    isWriting,
+    errorMessage,
+    writerAiInitErrorMesssage,
+  } = useWriteParagraphLocal();
 
   const {
     folder,
@@ -64,6 +70,10 @@ export default function ParagraphGeneratorPage(
             vocabularyList={vocabularyList}
             onWordHover={() => {}}
           />
+          {errorMessage ? <p className="text-red-500">{errorMessage}</p> : null}
+          {writerAiInitErrorMesssage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          ) : null}
           {isLoadingVocabularyList
             ? "...Loading"
             : vocabularyList.map((vocabulary) => (

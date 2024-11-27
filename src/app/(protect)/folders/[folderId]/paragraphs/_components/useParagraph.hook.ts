@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 export function useWriteParagraphLocal() {
   const [isWriting, setIsWriting] = useState(false);
   const [text, setText] = useState("");
-  const [error, setError] = useState<unknown>();
-  const { writer } = useAIWriter({
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { writer, errorMessage: writerAiInitErrorMesssage } = useAIWriter({
     tone: "casual",
     format: "plain-text",
     length: "medium",
@@ -16,7 +16,7 @@ export function useWriteParagraphLocal() {
     console.log("writeText", (window as any).ai.writer);
     if (!writer) {
       console.log("no writer");
-      setError("No writer");
+      setErrorMessage("No writer");
       return;
     }
 
@@ -41,7 +41,13 @@ export function useWriteParagraphLocal() {
       }
       console.log("stream", stream);
     } catch (e) {
-      setError(e);
+      let errorMessage = "";
+      if (typeof e === "string") {
+        errorMessage = e;
+      } else if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+      setErrorMessage(`Error when writing message: ${errorMessage}`);
       console.error(e);
     }
     setIsWriting(false);
@@ -49,7 +55,8 @@ export function useWriteParagraphLocal() {
   return {
     writeText,
     isWriting,
-    error,
+    errorMessage,
+    writerAiInitErrorMesssage,
     text,
     divRef,
   };
