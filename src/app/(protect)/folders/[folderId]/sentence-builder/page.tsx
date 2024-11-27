@@ -13,7 +13,6 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
     folderId: params.folderId,
   });
   const { folder } = useGetFolder(params.folderId);
-  console.log(vocabulary);
 
   return (
     <>

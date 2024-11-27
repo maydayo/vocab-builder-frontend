@@ -53,7 +53,7 @@ export default function ParagraphGeneratorPage(
             onClick={generate}
             disabled={isWriting || isLoadingVocabularyList}
           >
-            {!isLoadingVocabularyList || !isWriting
+            {!isLoadingVocabularyList && !isWriting
               ? "Generate Paragraph"
               : null}
             {isLoadingVocabularyList ? "Loading Vocabulary List" : null}
