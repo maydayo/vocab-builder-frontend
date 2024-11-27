@@ -50,7 +50,7 @@ export const HighlightedParagraph = (props: HighlightedParagraphProps) => {
   };
 
   return (
-    <article className="prose">
+    <article className="artboard py-10 min-h-52">
       {renderHighlightedWords(splitIntoWords(paragraph))}
     </article>
   );
