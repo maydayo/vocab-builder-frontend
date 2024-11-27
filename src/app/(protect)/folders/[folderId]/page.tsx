@@ -23,30 +23,28 @@ export default function DirectoryPage(props: DirectoryPageProps) {
         <article className="prose">
           <h1 className="pb-5">{folder?.folderName}</h1>
         </article>
-        {progress ? (
-          <>
-            <div
-              className="radial-progress text-primary"
-              style={
-                {
-                  "--value": progress.learnedVocabularyPercent,
-                  "--size": "10rem",
-                  "--thickness": "1.5rem",
-                } as DetailedHTMLProps<
-                  HTMLAttributes<HTMLDivElement>,
-                  HTMLDivElement
-                >
-              }
-              role="progressbar"
-            >
-              {progress.learnedVocabularyPercent}%
-            </div>
-            <p className="mb-3 font-semibold">
-              You&apos;ve learned {progress.learnedVocabulary} words from
-              {progress.allVocabulary} words 🥳
-            </p>
-          </>
-        ) : null}
+        <>
+          <div
+            className="radial-progress text-primary"
+            style={
+              {
+                "--value": progress?.learnedVocabularyPercent,
+                "--size": "10rem",
+                "--thickness": "1.5rem",
+              } as DetailedHTMLProps<
+                HTMLAttributes<HTMLDivElement>,
+                HTMLDivElement
+              >
+            }
+            role="progressbar"
+          >
+            {progress?.learnedVocabularyPercent}%
+          </div>
+          <p className="mb-3 font-semibold">
+            You&apos;ve learned {progress?.learnedVocabulary} words from
+            {progress?.allVocabulary} words 🥳
+          </p>
+        </>
 
         <div className="flex-col w-full flex justify-center items-center gap-5">
           <div className="card w-96 bg-base-100 shadow-md p-5">
