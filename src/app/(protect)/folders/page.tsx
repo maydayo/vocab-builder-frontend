@@ -108,7 +108,7 @@ function AddNewFolderModal(props: AddNewFolderModalProps) {
           <div className="join">
             <input
               type="text"
-              placeholder="Add your new vocabulary"
+              placeholder="Add your new folder"
               className="input input-bordered input-primary w-72 join-item"
               {...register("folderName")}
             />
