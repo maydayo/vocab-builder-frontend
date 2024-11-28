@@ -37,7 +37,12 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
           <h1 className="m-10">{vocabulary?.word}</h1>
         </div>
         <SentenceChecker word={vocabulary?.word || ""} isShow={!!vocabulary} />
-        {vocabulary ? <VocabularyCard vocabulary={vocabulary} /> : null}
+        {vocabulary ? (
+          <VocabularyCard
+            word={vocabulary.word}
+            wordDefinition={vocabulary.wordDefinition}
+          />
+        ) : null}
       </main>
     </>
   );

@@ -23,7 +23,10 @@ function CarouselItem(props: CarouselItemProps) {
   const { vocabulary } = props;
   return (
     <div className="carousel-item">
-      <VocabularyCard vocabulary={vocabulary} />
+      <VocabularyCard
+        word={vocabulary.word}
+        wordDefinition={vocabulary.wordDefinition}
+      />
     </div>
   );
 }

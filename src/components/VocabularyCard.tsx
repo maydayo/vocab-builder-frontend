@@ -1,16 +1,16 @@
-import { Vocabulary } from "@/types/vocabulary.type";
+import { WordDefinition } from "@/types/vocabulary.type";
 
-type VocabularyCardProps = { vocabulary: Vocabulary };
-export function VocabularyCard({ vocabulary }: VocabularyCardProps) {
+type VocabularyCardProps = { word: string; wordDefinition: WordDefinition };
+export function VocabularyCard({ word, wordDefinition }: VocabularyCardProps) {
   return (
     <div className="card bg-base-100 w-96 h-80 shadow-xl">
       <div className="card-body">
         <div>
-          <h2 className="card-title">{vocabulary?.word}</h2>
+          <h2 className="card-title">{word}</h2>
         </div>
         <div className="h-40 overflow-y-scroll prose">
           <ul className="list-decimal">
-            {vocabulary.wordDefinition.meanings.map((meaning, index) => (
+            {wordDefinition.meanings.map((meaning, index) => (
               <li key={index} className="pb-3">
                 <p className="text-sm">{meaning.partOfSpeech}</p>
                 <ul>
