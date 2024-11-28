@@ -1,10 +1,10 @@
 "use client";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useVocabulary } from "./_components/useVocabulary.hook";
 import { useEffect, useState } from "react";
-import { useCheckSentenceLocal } from "./_components/useCheckSentenceLocal.hook";
 import { SentenceBuilderNavbar } from "./_components/SentenceBuilderNavbar";
 import { useGetFolder } from "@/hooks/useGetFolder";
+import { SentenceChecker } from "./_components/SentenceChecker";
+import { VocabularyCard } from "@/components/VocabularyCard";
 
 type SentenceBuilderPageProps = { params: { folderId: string } };
 export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
@@ -21,74 +21,21 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
         folderName={folder?.folderName || ""}
       />
       <main className="flex min-h-screen flex-col items-center gap-5 py-24 px-5 md:px-12 lg:px-24">
-        <>RandomWord</>
         <button
           className="btn btn-primary"
           onClick={() => {
             random();
           }}
         >
-          Random
+          Random the word
         </button>
-        <div>{vocabulary?.word}</div>
+        <div className="prose">
+          <h1 className="m-10">{vocabulary?.word}</h1>
+        </div>
         <SentenceChecker word={vocabulary?.word || ""} isShow={!!vocabulary} />
-        <SentenceTranslator word={vocabulary?.word || ""} />
+        {vocabulary ? <VocabularyCard vocabulary={vocabulary} /> : null}
       </main>
     </>
-  );
-}
-
-type SentenceCheckerProps = { word: string; isShow: boolean };
-function SentenceChecker(props: SentenceCheckerProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<{ text: string }>();
-  const { word, isShow = false } = props;
-  // const { isPending, isError, result, errorMessage, checkSentence } =
-  //   useCheckSentence();
-  const { isPending, isError, result, errorMessage, checkSentence } =
-    useCheckSentenceLocal();
-
-  const onSubmit: SubmitHandler<{ text: string }> = async (data) => {
-    checkSentence({ word, sentence: data.text });
-  };
-
-  return (
-    <div className="flex-col w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <label className="form-control">
-          <div className="label">
-            <span className="label-text">Create your own sentence!</span>
-          </div>
-          <textarea
-            className="textarea textarea-bordered h-24 w-full"
-            placeholder="Think about that"
-            disabled={!isShow}
-            {...register("text", { required: true })}
-          ></textarea>
-        </label>
-
-        {isError ? <span className="text-error">{errorMessage}</span> : null}
-        {errors.text ? (
-          <span className="text-error">Type something</span>
-        ) : null}
-
-        <button
-          className="btn btn-primary join-item"
-          type="submit"
-          disabled={!isShow}
-        >
-          {isPending ? (
-            <span className="loading loading-dots loading-sm "></span>
-          ) : (
-            "Check the result"
-          )}
-        </button>
-      </form>
-      <div>{result}</div>
-    </div>
   );
 }
 
