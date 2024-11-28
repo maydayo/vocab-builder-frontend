@@ -46,11 +46,8 @@ function CarouselItem(props: CarouselItemProps) {
               ))}
             </ul>
           </div>
-          <div className="card-actions justify-between">
-            <button className="btn btn-md btn-secondary">
-              Still don't get it
-            </button>
-            <button className="btn btn-md btn-primary">
+          <div className="card-actions justify-end">
+            <button className="btn btn-md btn-primary btn-outline">
               I remembered this{" "}
             </button>
           </div>
