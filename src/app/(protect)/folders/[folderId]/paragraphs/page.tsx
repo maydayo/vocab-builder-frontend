@@ -5,6 +5,7 @@ import { useGetFolder } from "@/hooks/useGetFolder";
 import { useWriteParagraphLocal } from "./_components/useParagraph.hook";
 import { HighlightedParagraph } from "./_components/HighlightParagraph";
 import { ParagraphNavBar } from "./_components/ParagraphNavbar";
+import { VocabularyCarousel } from "./_components/VocabularyCarousel";
 
 type ParagraphGeneratorPageProps = { params: { folderId: string } };
 
@@ -82,6 +83,8 @@ export default function ParagraphGeneratorPage(
               ) : null}
             </>
           )}
+          <h2 className="pb-5 font-semibold">Vocabulary List</h2>
+          <VocabularyCarousel vocabularyList={vocabularyList} />
           {isLoading
             ? "...Loading"
             : vocabularyList.map((vocabulary) => (
