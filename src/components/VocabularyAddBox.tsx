@@ -1,6 +1,7 @@
 import { useAddVocabulary } from "@/hooks/useAddVocabulary.hook";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { WordDefinitionPanel } from "../app/(protect)/folders/[folderId]/paragraphs/_components/WordDefinitionPanel";
+import { VocabularyCard } from "./VocabularyCard";
+import { useState } from "react";
 
 type Inputs = {
   word: string;
@@ -11,14 +12,17 @@ export function VocabularyAddBox(props: VocabularyAddBoxProps) {
   const { folderId } = props;
   const { add, wordDefinition, isPending, isError, errorMessage } =
     useAddVocabulary();
+  const [showWord, setShowWord] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     add({ word: data.word, folderId });
+    setShowWord(getValues("word"));
   };
 
   return (
@@ -41,7 +45,11 @@ export function VocabularyAddBox(props: VocabularyAddBoxProps) {
       {errors.word && <span className="text-error">Word is required</span>}
       {isError ? <span className="text-error">{errorMessage}</span> : null}
       {!isPending && wordDefinition ? (
-        <WordDefinitionPanel definition={wordDefinition} />
+        <VocabularyCard
+          wordDefinition={wordDefinition}
+          word={showWord}
+          isShowAction={false}
+        />
       ) : null}
     </div>
   );
