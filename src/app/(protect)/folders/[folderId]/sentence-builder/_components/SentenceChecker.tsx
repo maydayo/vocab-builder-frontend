@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCheckSentenceLocal } from "./useCheckSentenceLocal.hook";
+import { useCheckSentence } from "./useCheckSentence.hook";
 
 type SentenceCheckerProps = { word: string; isShow: boolean };
 export function SentenceChecker(props: SentenceCheckerProps) {
@@ -9,17 +10,15 @@ export function SentenceChecker(props: SentenceCheckerProps) {
     formState: { errors },
   } = useForm<{ text: string }>();
   const { word, isShow = false } = props;
-  // const { isPending, isError, result, errorMessage, checkSentence } =
-  //   useCheckSentence();
   const { isPending, isError, result, errorMessage, checkSentence } =
-    useCheckSentenceLocal();
+    useCheckSentence();
 
   const onSubmit: SubmitHandler<{ text: string }> = async (data) => {
     checkSentence({ word, sentence: data.text });
   };
 
   return (
-    <div className="flex-col w-full">
+    <div className="flex-col w-full prose">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <label className="form-control">
           <div className="label">
@@ -53,7 +52,7 @@ export function SentenceChecker(props: SentenceCheckerProps) {
           )}
         </button>
       </form>
-      <div>{result}</div>
+      <p>{result}</p>
     </div>
   );
 }
