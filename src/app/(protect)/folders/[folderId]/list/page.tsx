@@ -1,16 +1,20 @@
 "use client";
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { useVocabularyList } from "./_components/useVocabularyList.hook";
-import { WordDefinitionPanel } from "@/app/(protect)/folders/[folderId]/paragraphs/_components/WordDefinitionPanel";
 import { VocabularyAddBox } from "@/components/VocabularyAddBox";
 import { LearningStatusButton } from "./_components/LearningStatusButton";
 import { VocabularyListNavbar } from "./_components/VocabularyListNavbar";
+import { VocabularyCard } from "@/components/VocabularyCard";
+import { useState } from "react";
 
 type VocabularyListPage = { params: { folderId: string } };
 export default function VocabularyListPage(props: VocabularyListPage) {
   const { folderId } = props.params;
   const { vocabularyList, invalidateQueries } = useVocabularyList(folderId);
   const { folder } = useGetFolder(folderId);
+  const [selectedVocabularyIndex, setSelectedVocabularyIndex] = useState<
+    number | null
+  >(null);
 
   return (
     <>
@@ -43,9 +47,19 @@ export default function VocabularyListPage(props: VocabularyListPage) {
                     <th>{index}</th>
                     <td>{vocabulary.word}</td>
                     <td>
-                      <WordDefinitionPanel
-                        definition={vocabulary.wordDefinition}
-                      />
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => {
+                          setSelectedVocabularyIndex(index);
+                          (
+                            document?.getElementById(
+                              "definition-modal"
+                            ) as HTMLDialogElement
+                          )?.showModal();
+                        }}
+                      >
+                        Show Definition
+                      </button>
                     </td>
                     <td>{vocabulary.learningTimes}</td>
                     <td>
@@ -60,6 +74,29 @@ export default function VocabularyListPage(props: VocabularyListPage) {
             </tbody>
           </table>
         </div>
+        <dialog id="definition-modal" className="modal" role="dialog">
+          <div className="relative">
+            {selectedVocabularyIndex !== null &&
+            vocabularyList[selectedVocabularyIndex] ? (
+              <VocabularyCard
+                word={vocabularyList[selectedVocabularyIndex].word}
+                wordDefinition={
+                  vocabularyList[selectedVocabularyIndex].wordDefinition
+                }
+                isShowAction={false}
+              />
+            ) : null}
+            <label className="modal-backdrop" htmlFor="my_modal_7">
+              Close
+            </label>
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+          </div>
+        </dialog>
       </main>
     </>
   );
