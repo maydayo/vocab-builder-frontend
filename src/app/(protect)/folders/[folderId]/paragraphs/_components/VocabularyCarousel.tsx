@@ -2,13 +2,13 @@ import { Vocabulary } from "@/types/vocabulary.type";
 
 type VocabularyCarouselProps = {
   vocabularyList: Vocabulary[];
+  isPending: boolean;
 };
 export function VocabularyCarousel(props: VocabularyCarouselProps) {
-  const vocabularyList = props.vocabularyList;
-  const isEmpty = vocabularyList.length === 0;
+  const { vocabularyList, isPending } = props;
   return (
     <div className="carousel carousel-center bg-neutral rounded-box max-w-lg min-w-lg space-x-4 p-4">
-      {isEmpty
+      {isPending
         ? [...Array(5)].map((_, index) => <CarouselSkeletonItem key={index} />)
         : vocabularyList.map((vocabulary) => (
             <CarouselItem vocabulary={vocabulary} key={vocabulary.id} />

@@ -84,17 +84,10 @@ export default function ParagraphGeneratorPage(
             </>
           )}
           <h2 className="pb-5 font-semibold">Vocabulary List</h2>
-          <VocabularyCarousel vocabularyList={vocabularyList} />
-          {isLoading
-            ? "...Loading"
-            : vocabularyList.map((vocabulary) => (
-                <div key={vocabulary.id}>
-                  <p>
-                    {vocabulary.word} -{" "}
-                    {vocabulary.wordDefinition.meanings[0].partOfSpeech}
-                  </p>
-                </div>
-              ))}
+          <VocabularyCarousel
+            vocabularyList={vocabularyList}
+            isPending={vocabularyList.length === 0 || isLoading}
+          />
         </div>
       </main>
     </>
