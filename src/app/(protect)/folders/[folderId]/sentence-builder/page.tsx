@@ -1,6 +1,6 @@
 "use client";
 import { useVocabulary } from "./_components/useVocabulary.hook";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { SentenceBuilderNavbar } from "./_components/SentenceBuilderNavbar";
 import { useGetFolder } from "@/hooks/useGetFolder";
 import { SentenceChecker } from "./_components/SentenceChecker";
@@ -13,6 +13,10 @@ export default function SentenceBuilderPage(props: SentenceBuilderPageProps) {
     folderId: params.folderId,
   });
   const { folder } = useGetFolder(params.folderId);
+
+  useEffect(() => {
+    random();
+  }, []);
 
   return (
     <>
